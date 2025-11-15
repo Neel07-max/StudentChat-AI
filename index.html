@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StudyBuddy — AI Student Assistant</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="signInPage" class="page center-page fade-in">
+    <div class="signin-card scale-in">
+      <h1 class="brand">📚 AbolTabol</h1>
+      <p class="muted">Smart study assistant for students</p>
+      <form id="signinForm" class="signin-form">
+        <label class="field">
+          <span class="label-text">Student Name</span>
+          <input id="studentName" type="text" required />
+        </label>
+        <label class="field">
+          <span class="label-text">Email</span>
+          <input id="studentEmail" type="email" required />
+        </label>
+        <button type="submit" class="btn primary">Start Learning →</button>
+      </form>
+    </div>
+  </main>
+
+  <main id="chatPage" class="page hidden">
+    <div class="app-shell">
+      <aside id="sidebar" class="sidebar">
+        <div class="sidebar-top">
+          <h2 class="logo">Abol Tabol</h2>
+          <button id="closeSidebar" class="icon-btn">✕</button>
+        </div>
+        <button id="newChatBtn" class="sidebar-btn">➕ New Chat</button>
+        <input id="searchChats" placeholder="🔍 Search chats..." class="search-input" />
+        <div id="chatList" class="chat-list"></div>
+        <button id="signOutBtn" class="sidebar-btn outline">⏻ Sign Out</button>
+      </aside>
+
+      <section class="main-area fade-in">
+        <header class="topbar">
+          <button id="openSidebar" class="icon-btn">☰</button>
+          <h3 id="userGreeting" class="topbar-title"></h3>
+          <button id="clearChatBtn" class="btn small outline">🗑 Clear Chat</button>
+        </header>
+
+        <div class="quick-actions">
+          <button class="chip" data-prompt="Clear my doubt about ">❓ Clear My Doubt</button>
+          <button class="chip" data-prompt="Create a study routine for ">📅 Study Routine</button>
+          <button class="chip" data-prompt="Explain in simple words: ">✨ Simple Explain</button>
+        </div>
+
+        <div id="chatContainer" class="chat-container"></div>
+
+        <form id="chatForm" class="chat-input-area">
+          <input type="text" class="chat-input" style="width: 600px; padding: 10px; border-radius: 10px;" placeholder="Type your question...">
+          <button type="submit" class="btn primary" style = "width: 100px;">Send</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
