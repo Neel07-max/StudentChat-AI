@@ -1,5 +1,7 @@
 // Upgraded JS with animations & clean flow
 
+// Change this if your backend runs on a different host/port
+const BACKEND_URL = 'http://127.0.0.1:5000';
 const LS_USER = 'sb_user', LS_CHATS = 'sb_chats';
 let chats = [], activeChat = null;
 
@@ -68,12 +70,52 @@ function renderChat() {
 }
 
 function botReply(userText) {
+  // Call backend /chat endpoint to get a reply
   pushMsg('bot', 'Thinking...');
-  setTimeout(() => {
-    activeChat.messages.pop();
-    pushMsg('bot', 'Here is your answer: ' + userText);
-  }, 900);
+  (async () => {
+    try {
+        const res = await fetch(`${BACKEND_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userText })
+      });
+      if (!res.ok) throw new Error(`Server ${res.status}`);
+      const data = await res.json();
+      activeChat.messages.pop();
+      pushMsg('bot', data.reply || data.message || JSON.stringify(data));
+    } catch (err) {
+      console.error('chat error', err);
+      activeChat.messages.pop();
+      pushMsg('bot', 'Error contacting server: ' + (err.message || err));
+    }
+  })();
 }
+
+// Demo: call /api/say_hello and show response in #output
+async function sendToPython(name = 'Neelanjan') {
+  const out = $('output');
+  if (out) out.textContent = 'Sending...';
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/say_hello`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name })
+    });
+    if (!res.ok) throw new Error(`Server ${res.status}`);
+    const data = await res.json();
+    if (out) out.textContent = data.message ?? JSON.stringify(data);
+  } catch (err) {
+    console.error('sendToPython error', err);
+    if (out) out.textContent = 'Error: ' + (err.message || err);
+  }
+}
+
+// Wire demo button and initialize app when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = $('helloBtn');
+  if (btn) btn.addEventListener('click', () => sendToPython());
+  init();
+});
 
 function saveChats() { localStorage.setItem(LS_CHATS, JSON.stringify(chats)) }
 function loadChats() { chats = JSON.parse(localStorage.getItem(LS_CHATS) || '[]') }

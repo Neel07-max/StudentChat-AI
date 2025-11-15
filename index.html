@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>StudyBuddy — AI Student Assistant</title>
   <link rel="stylesheet" href="css/style.css">
+  
 </head>
 <body>
   <main id="signInPage" class="page center-page fade-in">
@@ -51,10 +52,18 @@
           <button class="chip" data-prompt="Explain in simple words: ">✨ Simple Explain</button>
         </div>
 
+        <!-- Backend demo: simple button to POST to a local Flask API -->
+        <div class="backend-demo" style="margin:16px 0;">
+          <h4 style="margin:0 0 8px 0;">Backend demo</h4>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button id="helloBtn" type="button" class="btn">Say Hello (server)</button>
+            <p id="output" aria-live="polite" style="margin:0;color:var(--muted-color,#444);"></p>
+          </div>
+        </div>
         <div id="chatContainer" class="chat-container"></div>
 
         <form id="chatForm" class="chat-input-area">
-          <input type="text" class="chat-input" style="width: 600px; padding: 10px; border-radius: 10px;" placeholder="Type your question...">
+          <input id="chatInput" type="text" class="chat-input" style="width: 600px; padding: 10px; border-radius: 10px;" placeholder="Type your question...">
           <button type="submit" class="btn primary" style = "width: 100px;">Send</button>
         </form>
       </section>
